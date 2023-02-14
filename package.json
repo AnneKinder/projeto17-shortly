@@ -1,0 +1,21 @@
+{
+  "name": "projeto17-shortly",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnneKinder/projeto17-shortly.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnneKinder/projeto17-shortly/issues"
+  },
+  "homepage": "https://github.com/AnneKinder/projeto17-shortly#readme"
+}
