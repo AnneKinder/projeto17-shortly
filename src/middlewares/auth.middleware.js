@@ -41,7 +41,7 @@ export async function signInSchemaValidation (req, res, next){
 
     if (validation.error){
         const errors = validation.error.details.map((detail) => detail.message)
-        res.status(402).send(errors)
+        res.status(422).send(errors)
         return
     }
 
