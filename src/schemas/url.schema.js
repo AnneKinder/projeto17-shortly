@@ -1,5 +1,7 @@
 import joi from 'joi'
 
-    export const urlSchema = joi.object({
+    const urlSchema = joi.object({
         url: joi.string().required()
     })
+
+    export default urlSchema
