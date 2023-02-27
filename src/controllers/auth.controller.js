@@ -1,14 +1,14 @@
-import {db} from '../database/database.connection.js'
+import { db } from '../database/database.connection.js'
 import bcrypt from "bcrypt";
 import { v4 as uuidV4 } from "uuid";
 
-export async function signUp(req, res){
+export async function signUp(req, res) {
 
-    const {name, email, password} = res.locals.user
+    const { name, email, password } = res.locals.user
 
     const passwordHash = bcrypt.hashSync(password, 10);
 
-    try{
+    try {
         await db.query(`
         INSERT INTO users 
         (name, email, password) 
@@ -18,43 +18,41 @@ export async function signUp(req, res){
         res.status(201).send("Created.")
     }
 
-    catch(err){
+    catch (err) {
         res.status(422).send(err.message)
     }
 }
 
-export async function signIn(req, res){
+export async function signIn(req, res) {
 
-    const {email, password} = res.locals.user
+    const { email, password } = res.locals.user
     const token = uuidV4();
 
-    try{
-        
+    try {
+
         const userInfo = await db.query(`
         SELECT * FROM users
         WHERE email = $1
         `, [email])
-    
+
         const passwordCompare = bcrypt.compareSync(password, userInfo.rows[0].password);
 
-        console.log(userInfo.rows)
-
         if (userInfo && passwordCompare) {
-    
+
             await db.query(`
             INSERT INTO sessions 
             (user_id, token) 
             VALUES ($1, $2);
             `, [userInfo.rows[0].id, token])
-     
-            res.status(200).send({token: token})
-    
+
+            res.status(200).send({ token: token })
+
         } else {
-          res.status(401).send("Incorrect e-mail and password.");
+            res.status(401).send("Incorrect e-mail and password.");
         }
-    
+
     }
-    catch(err){
+    catch (err) {
         res.status(422).send(err.message)
     }
 

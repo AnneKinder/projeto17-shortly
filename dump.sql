@@ -61,8 +61,8 @@ CREATE TABLE public.urls (
     user_id integer NOT NULL,
     original_url text NOT NULL,
     short_url text NOT NULL,
-    qty_visits bigint,
-    "createdAt" timestamp without time zone DEFAULT '2023-02-27 14:47:11.063166'::timestamp without time zone NOT NULL
+    qty_visits bigint DEFAULT '0'::bigint,
+    "createdAt" timestamp without time zone DEFAULT '2023-02-27 17:21:30.528602'::timestamp without time zone NOT NULL
 );
 
 
@@ -144,6 +144,8 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.sessions VALUES (1, 1, '72f5cab4-2bfe-4efc-8c37-50ad01f21089', '2023-02-27 14:47:17.421218');
+INSERT INTO public.sessions VALUES (2, 1, '4b6bb192-ac41-4e14-ad42-32ffb5211303', '2023-02-27 14:47:17.421218');
 
 
 --
@@ -156,13 +158,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.users VALUES (1, 'Anne', 'annekhd@hotmail.com', '$2b$10$YnfsNFmUySgcUOTTFHvPj.snP8ZtMa5/0KsC69QrvYI5k/2hQP6qy', '2023-02-27 14:47:02.986621');
 
 
 --
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.sessions_id_seq', 2, true);
 
 
 --
@@ -176,7 +179,7 @@ SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --
@@ -217,14 +220,6 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.sessions
     ADD CONSTRAINT sessions_fk0 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: urls urls_fk0; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.urls
-    ADD CONSTRAINT urls_fk0 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
