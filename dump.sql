@@ -28,7 +28,7 @@ CREATE TABLE public.sessions (
     id integer NOT NULL,
     user_id integer NOT NULL,
     token text NOT NULL,
-    creation timestamp without time zone DEFAULT '2023-02-27 13:42:10.250969'::timestamp without time zone NOT NULL
+    "createdAt" timestamp without time zone DEFAULT '2023-02-27 14:47:17.421218'::timestamp without time zone NOT NULL
 );
 
 
@@ -61,7 +61,8 @@ CREATE TABLE public.urls (
     user_id integer NOT NULL,
     original_url text NOT NULL,
     short_url text NOT NULL,
-    qty_visits bigint
+    qty_visits bigint,
+    "createdAt" timestamp without time zone DEFAULT '2023-02-27 14:47:11.063166'::timestamp without time zone NOT NULL
 );
 
 
@@ -93,7 +94,8 @@ CREATE TABLE public.users (
     id integer NOT NULL,
     name text NOT NULL,
     email text NOT NULL,
-    password text NOT NULL
+    password text NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT '2023-02-27 14:47:02.986621'::timestamp without time zone NOT NULL
 );
 
 
@@ -142,7 +144,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.sessions VALUES (4, 1, '2d807022-d9f2-4c6d-abde-93ee7ae7c693', '2023-02-27 13:42:10.250969');
 
 
 --
@@ -155,14 +156,13 @@ INSERT INTO public.sessions VALUES (4, 1, '2d807022-d9f2-4c6d-abde-93ee7ae7c693'
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'Anne', 'annekhd@hotmail.com', '$2b$10$i0VCXQli.CCK1jUn60sNMeGXqJDTGs3z7gCBd7ml7TUBgXXJ926Qe');
 
 
 --
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 4, true);
+SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
 
 
 --
@@ -176,7 +176,7 @@ SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+SELECT pg_catalog.setval('public.users_id_seq', 1, false);
 
 
 --
