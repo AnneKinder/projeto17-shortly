@@ -37,7 +37,7 @@ export async function signIn(req, res) {
 
         const passwordCompare = bcrypt.compareSync(password, userInfo.rows[0].password);
 
-        if (userInfo.rowCount===0 && passwordCompare) {
+        if (userInfo.rowCount!==0 && passwordCompare) {
 
             await db.query(`
             INSERT INTO sessions 

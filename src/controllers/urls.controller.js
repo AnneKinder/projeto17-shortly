@@ -61,7 +61,6 @@ export async function shortenUrl(req, res) {
 
 export async function getUrlById(req, res){
 
-
   const {id} = req.params
 
   try{
@@ -70,6 +69,15 @@ export async function getUrlById(req, res){
     FROM urls
     WHERE id=$1  
     `, [id])
+
+    const body = {
+      id: parseInt(id),
+      shortUrl: urlById.rows[0].short_url,
+      url: urlById.rows[0].original_url
+    }
+
+    res.status(200).send(body)
+
   }
   catch{
 
