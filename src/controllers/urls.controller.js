@@ -6,7 +6,6 @@ export async function shortenUrl(req, res) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
 
-  console.log(req.headers)
 
   if (!token) {
     res.sendStatus(401);
@@ -19,7 +18,7 @@ export async function shortenUrl(req, res) {
         WHERE token = $1
         `, [token])
 
-  if (!session) {
+  if (session.rows===0) {
     res.sendStatus(401);
     return;
   }
@@ -57,5 +56,25 @@ export async function shortenUrl(req, res) {
   catch (err) {
     res.status(422).send(err.message)
   }
+
+}
+
+export async function getUrlById(req, res){
+
+
+  const {id} = req.params
+
+  try{
+    const urlById = await db.query(`
+    SELECT *
+    FROM urls
+    WHERE id=$1  
+    `, [id])
+  }
+  catch{
+
+  }
+ 
+
 
 }

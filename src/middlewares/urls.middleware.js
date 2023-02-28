@@ -1,4 +1,3 @@
-import { db } from '../database/database.connection.js'
 import urlSchema from '../schemas/url.schema.js'
 
 
@@ -14,6 +13,8 @@ export async function urlSchemaValidation (req, res, next){
         res.status(422).send(errors)
         return
     }
+
+
 
 
     res.locals.user = url
