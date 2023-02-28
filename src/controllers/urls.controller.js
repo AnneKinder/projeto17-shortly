@@ -90,8 +90,6 @@ export async function getUrlById(req, res) {
     res.status(422).send(err.message)
   }
 
-
-
 }
 
 export async function openUrl(req, res) {
@@ -129,5 +127,59 @@ export async function openUrl(req, res) {
   }
 
 
+
+}
+
+export async function deleteUrlById(req, res) {
+
+  const { id } = req.params
+
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+
+
+  if (!token) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const session = await db.query(`
+        SELECT * 
+        FROM sessions
+        WHERE token = $1
+        `, [token])
+
+  if (session.rowCount === 0) {
+    res.sendStatus(401);
+    return;
+  }
+
+  try {
+    const chosenUrl = await db.query(`
+      SELECT *
+      FROM urls
+      WHERE id = $1
+    `, [id])
+
+
+    if (chosenUrl.rowCount === 0) {
+      res.sendStatus(404)
+      return
+    }
+
+    if (chosenUrl.rows[0].user_id === session.rows[0].user_id) {
+      await db.query(`
+        DELETE 
+        FROM urls
+        WHERE id = $1      
+      `, [id])
+
+      res.status(204).send("URL deleted.")
+    }
+
+  }
+  catch (err) {
+    res.status(422).send(err.message)
+  }
 
 }
