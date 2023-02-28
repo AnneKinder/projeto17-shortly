@@ -1,7 +1,7 @@
 import joi from 'joi'
 
     const urlSchema = joi.object({
-        url: joi.string().required()
+        url: joi.uri().string().required()
     })
 
     export default urlSchema
