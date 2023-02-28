@@ -70,6 +70,13 @@ export async function getUrlById(req, res){
     WHERE id=$1  
     `, [id])
 
+
+    if(urlById.rowCount===0){
+      res.sendStatus(404)
+      return
+    }
+
+
     const body = {
       id: parseInt(id),
       shortUrl: urlById.rows[0].short_url,
@@ -79,8 +86,8 @@ export async function getUrlById(req, res){
     res.status(200).send(body)
 
   }
-  catch{
-
+  catch(err){
+    res.status(422).send(err.message)
   }
  
 
