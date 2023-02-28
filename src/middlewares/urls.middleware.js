@@ -14,9 +14,6 @@ export async function urlSchemaValidation (req, res, next){
         return
     }
 
-
-
-
     res.locals.user = url
 
     next()

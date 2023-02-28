@@ -93,3 +93,35 @@ export async function getUrlById(req, res){
 
 
 }
+
+export async function openUrl(req, res){
+
+  const {shortUrl} = req.params
+
+  try{
+   
+   const item = await db.query(` 
+    SELECT *
+    FROM urls
+    WHERE short_url = $1   
+   `, [shortUrl])
+
+
+    if(!item){
+      res.sendStatus(404)
+      return
+    }
+
+    const originalUrl = item.rows[0].original_url
+
+    res.redirect(originalUrl)
+
+
+  }
+  catch(err){
+    res.status(422).send(err.message)
+  }
+ 
+
+
+}
