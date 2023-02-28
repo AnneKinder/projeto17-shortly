@@ -37,8 +37,8 @@ export async function shortenUrl(req, res) {
       await db.query(`
         SELECT *
         FROM urls
-        WHERE original_url=$1
-      `, [url.url])
+        WHERE short_url=$1
+      `, [shortUrl])
 
     const urlId = thisUrl.rows[0].id
 
