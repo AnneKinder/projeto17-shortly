@@ -18,7 +18,7 @@ export async function shortenUrl(req, res) {
         WHERE token = $1
         `, [token])
 
-  if (session.rowCount===0) {
+  if (session.rowCount === 0) {
     res.sendStatus(401);
     return;
   }
@@ -59,11 +59,11 @@ export async function shortenUrl(req, res) {
 
 }
 
-export async function getUrlById(req, res){
+export async function getUrlById(req, res) {
 
-  const {id} = req.params
+  const { id } = req.params
 
-  try{
+  try {
     const urlById = await db.query(`
     SELECT *
     FROM urls
@@ -71,7 +71,7 @@ export async function getUrlById(req, res){
     `, [id])
 
 
-    if(urlById.rowCount===0){
+    if (urlById.rowCount === 0) {
       res.sendStatus(404)
       return
     }
@@ -86,42 +86,48 @@ export async function getUrlById(req, res){
     res.status(200).send(body)
 
   }
-  catch(err){
+  catch (err) {
     res.status(422).send(err.message)
   }
- 
+
 
 
 }
 
-export async function openUrl(req, res){
+export async function openUrl(req, res) {
 
-  const {shortUrl} = req.params
+  const { shortUrl } = req.params
 
-  try{
-   
-   const item = await db.query(` 
+  try {
+
+    const item = await db.query(` 
     SELECT *
     FROM urls
     WHERE short_url = $1   
    `, [shortUrl])
 
 
-    if(!item){
+    if (!item) {
       res.sendStatus(404)
       return
     }
 
     const originalUrl = item.rows[0].original_url
+    const currentVisits = parseInt(item.rows[0].qty_visits)
 
     res.redirect(originalUrl)
 
+    const increment = await db.query(`
+      UPDATE urls
+      SET qty_visits = $1
+      WHERE short_url = $2
+    `, [currentVisits + 1, shortUrl])
 
   }
-  catch(err){
+  catch (err) {
     res.status(422).send(err.message)
   }
- 
+
 
 
 }
