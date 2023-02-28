@@ -18,7 +18,7 @@ export async function shortenUrl(req, res) {
         WHERE token = $1
         `, [token])
 
-  if (session.rows===0) {
+  if (session.rowCount===0) {
     res.sendStatus(401);
     return;
   }
