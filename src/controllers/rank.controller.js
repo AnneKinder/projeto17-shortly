@@ -4,12 +4,12 @@ export async function getRank (req, res) {
 
     try{
         const body = await db.query(`
-        SELECT json_build_object(
-            'id', users.id,
-            'name', users.name,
-            'linksCount', COUNT(urls.user_id),
-            'visitCount', SUM(urls.qty_visits)
-        )
+        SELECT 
+        users.id AS id, 
+        users.name AS name, 
+        COUNT(urls.user_id) AS "linksCount", 
+        SUM(urls.qty_visits) AS "visitCount"
+        
             FROM urls
             JOIN users
             ON users.id=urls.user_id
@@ -19,11 +19,9 @@ export async function getRank (req, res) {
         `)
 
        res.status(200).send(body.rows)
-
     
     }
     catch (err) {
         res.status(422).send(err.message)
     }
-
 }

@@ -96,19 +96,18 @@ export async function openUrl(req, res) {
 
   const { shortUrl } = req.params
 
-  try {
-
-    const item = await db.query(` 
+  const item = await db.query(` 
     SELECT *
     FROM urls
     WHERE short_url = $1   
-   `, [shortUrl])
+  `, [shortUrl])
 
+  if (item.rowCount===0) {
+    res.sendStatus(404)
+    return
+  }
 
-    if (!item) {
-      res.sendStatus(404)
-      return
-    }
+  try {
 
     const originalUrl = item.rows[0].original_url
     const currentVisits = parseInt(item.rows[0].qty_visits)
