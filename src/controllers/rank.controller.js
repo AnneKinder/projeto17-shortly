@@ -18,7 +18,7 @@ export async function getRank (req, res) {
             LIMIT 10       
         `)
 
-       res.status(200).send(body)
+       res.status(200).send(body.rows)
 
     
     }
