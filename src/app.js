@@ -11,8 +11,9 @@ app.use(cors())
 
 import authRouter from './routes/auth.router.js';
 import urlRouter from './routes/urls.router.js';
+import userRouter from './routes/user.router.js';
 
-app.use ([authRouter, urlRouter])
+app.use ([authRouter, urlRouter, userRouter])
 
 const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Server running in port ${port}.`))

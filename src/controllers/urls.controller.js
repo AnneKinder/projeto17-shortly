@@ -175,6 +175,8 @@ export async function deleteUrlById(req, res) {
       `, [id])
 
       res.status(204).send("URL deleted.")
+    }else{
+      res.sendStatus(401)
     }
 
   }
